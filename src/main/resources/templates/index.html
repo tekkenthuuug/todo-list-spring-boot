@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDo list application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+    <div class="container is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
+        <h1 class="title">Todo List</h1>
+        <progress class="progress" value="15" max="100">15%</progress>
+        <div class="columns is-multiline">
+            <input class="input is-info my-2" type="text" placeholder="Task name">
+            <button class="button is-fullwidth is-medium is-primary">Add task</button>
+
+            <div th:each="todo: ${todoList}" class="card column is-full my-4 p-2">
+                <div class="card-content is-flex is-justify-content-space-between is-align-items-center">
+                    <h1 th:text="${todo.name}">XD</h1>
+                    <button class="delete is-danger"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
