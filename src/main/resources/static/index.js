@@ -5,6 +5,7 @@ const todos = todosContainer.getElementsByClassName("todo-card");
 
 const API_BASE_URL = "http://localhost:8000/api";
 
+// send delete request to back-end and if success remove todoItem from DOM
 const deleteTodoItem = async (currentTodo) => {
     const response = await fetch(`${API_BASE_URL}/task/${currentTodo.id}`, { method: 'DELETE' });
 
@@ -17,12 +18,7 @@ const deleteTodoItem = async (currentTodo) => {
     }
 }
 
-for (let i = 0; i < todos.length; i++) {
-    const currentTodo = todos[i];
-
-    currentTodo.getElementsByClassName("todo-delete")[0].addEventListener('click', () => deleteTodoItem(currentTodo));
-}
-
+// send create request to backend and add todoItem to DOM
 const addTodoItemToDOM = (todo) => {
     const container = document.createElement("div");
     const content = document.createElement("div");
@@ -44,6 +40,13 @@ const addTodoItemToDOM = (todo) => {
     container.appendChild(content);
 
     todosContainer.prepend(container);
+}
+
+// add eventListeners to delete buttons of todoItems
+for (let i = 0; i < todos.length; i++) {
+    const currentTodo = todos[i];
+
+    currentTodo.getElementsByClassName("todo-delete")[0].addEventListener('click', () => deleteTodoItem(currentTodo));
 }
 
 addTodoForm.addEventListener('submit', async (e) => {
