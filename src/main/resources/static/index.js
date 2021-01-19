@@ -5,11 +5,32 @@ const todos = todosContainer.getElementsByClassName("todo-card");
 
 const API_BASE_URL = "http://localhost:8000/api";
 
+// helpers
+const fetchAndJson = async (input, init) => {
+    const response = await fetch(input, init);
+
+    return await response.json();
+}
+
+// requests
+const deleteTodoItemRequest = async (todoId) => {
+    return await fetchAndJson(`${API_BASE_URL}/task/${todoId}`, {method: 'DELETE'});
+}
+
+const createTodoItemRequest = async (name) => {
+    return await fetchAndJson(`${API_BASE_URL}/task/create`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name})
+        });
+}
+
 // send delete request to back-end and if success remove todoItem from DOM
 const deleteTodoItem = async (currentTodo) => {
-    const response = await fetch(`${API_BASE_URL}/task/${currentTodo.id}`, { method: 'DELETE' });
-
-    const data = await response.json();
+    const data = await deleteTodoItemRequest(currentTodo.id);
 
     if (data === true) {
         currentTodo.remove();
@@ -18,7 +39,7 @@ const deleteTodoItem = async (currentTodo) => {
     }
 }
 
-// send create request to backend and add todoItem to DOM
+// add todoItem to DOM
 const addTodoItemToDOM = (todo) => {
     const container = document.createElement("div");
     const content = document.createElement("div");
@@ -52,16 +73,7 @@ for (let i = 0; i < todos.length; i++) {
 addTodoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const response = await fetch(`${API_BASE_URL}/task/create`,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({name: todoNameInput.value})
-        });
-
-    const data = await response.json();
+    const data = await createTodoItemRequest(todoNameInput.value);
 
     addTodoItemToDOM(data);
 
