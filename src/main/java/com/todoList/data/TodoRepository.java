@@ -15,10 +15,29 @@ public class TodoRepository {
         return todoList;
     }
 
-    public static Todo addTodo(String name) {
+    public static Todo add(String name) {
         Todo todo = new Todo(name);
-        todoList.add(todo);
+        todoList.add(0, todo);
 
         return todo;
+    }
+
+    public static boolean removeById(UUID taskId) {
+        return todoList.removeIf(todo -> taskId.equals(todo.getId()));
+    }
+
+    public static boolean toggleIsCompletedById(UUID taskId) {
+        int listSize = todoList.size() - 1;
+
+        for (int i = listSize; i >= 0; i--) {
+            Todo currentTodo = todoList.get(i);
+            if (taskId.equals(currentTodo.getId())) {
+                currentTodo.setIsCompleted(!currentTodo.getIsCompleted());
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

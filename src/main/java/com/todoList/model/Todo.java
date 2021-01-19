@@ -1,12 +1,14 @@
 package com.todoList.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Todo {
     private String name;
-    private Boolean completed = false;
+    private Boolean isCompleted = false;
     private Date createdDate = new Date();
     private Date completedDate = null;
+    private UUID id = UUID.randomUUID();
 
     public Todo(String name) {
         this.name = name;
@@ -20,12 +22,12 @@ public class Todo {
         this.name = name;
     }
 
-    public Boolean getCompleted() {
-        return completed;
+    public Boolean getIsCompleted() {
+        return isCompleted;
     }
 
-    public void setCompleted(Boolean completed) {
-        this.completed = completed;
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
     public Date getCreatedDate() {
@@ -42,5 +44,9 @@ public class Todo {
 
     public void setCompletedDate(Date completedDate) {
         this.completedDate = completedDate;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }

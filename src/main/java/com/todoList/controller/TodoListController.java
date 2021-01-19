@@ -2,13 +2,12 @@ package com.todoList.controller;
 
 import com.todoList.data.TodoRepository;
 import com.todoList.model.Todo;
-import com.todoList.responseBody.AddTodoForm;
+import com.todoList.requestBody.AddTodoForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Controller
 public class TodoListController {
@@ -25,6 +24,22 @@ public class TodoListController {
     @PostMapping(value = "/api/task/create")
     @ResponseBody
     public Todo addTodo(@RequestBody AddTodoForm addTodoForm) {
-        return todoRepository.addTodo(addTodoForm.getName());
+        return todoRepository.add(addTodoForm.getName());
+    }
+
+    @DeleteMapping(value = "/api/task/{taskId}")
+    @ResponseBody
+    public boolean removeTodo(@PathVariable String taskId) {
+        UUID uuid = UUID.fromString(taskId);
+
+        return todoRepository.removeById(uuid);
+    }
+
+    @PutMapping(value = "/api/task/complete/{taskId}")
+    @ResponseBody
+    public boolean completeTodo(@PathVariable String taskId) {
+        UUID uuid = UUID.fromString(taskId);
+
+        return todoRepository.toggleIsCompletedById(uuid);
     }
 }

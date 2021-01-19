@@ -1,4 +1,4 @@
-package com.todoList.responseBody;
+package com.todoList.requestBody;
 
 public class AddTodoForm {
     private String name;
