@@ -18,7 +18,6 @@ const updateCompletePercentage = () => {
     let completedCounter = 0;
 
     for (let i = todos.length - 1; i >= 0; i--) {
-        console.log(todos.item(i).dataset.iscompleted)
         if (todos.item(i).dataset.iscompleted === "true") {
             completedCounter++;
         }
@@ -84,7 +83,7 @@ const addTodoItemToDOM = (todo) => {
     container.className = "card my-4 p-2";
     content.className = "card-content is-flex is-justify-content-space-between is-align-items-center";
     button.className = "delete is-danger todo-delete";
-    h1.className = "todo-name";
+    h1.className = "todo-name mr-4";
 
     h1.innerText = todo.name;
     container.dataset.iscompleted = todo.isCompleted;

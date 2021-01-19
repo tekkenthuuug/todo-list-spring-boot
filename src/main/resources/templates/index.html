@@ -11,16 +11,16 @@
     <section class="section">
         <div class="container is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
             <h1 class="title">Todo List</h1>
-            <progress id="progress" class="progress" th:value="${progressPercentage}" max="100">Progress</progress>
-            <div class="columns is-multiline">
-                <form id="add-todo-form" class="column is-full">
+            <progress id="progress" class="progress w100" th:value="${progressPercentage}" max="100">Progress</progress>
+            <div class="is-flex is-flex-direction-column w100">
+                <form id="add-todo-form">
                     <input class="input is-info my-2" type="text" placeholder="Todo name" required>
                     <button class="button is-fullwidth is-medium is-primary" type="submit">Add todo</button>
                 </form>
-                <div id="todos-container" class="column is-full">
-                    <div th:each="todo: ${todoList}" th:id="${todo.id}" class="card my-4 p-2 todo-card" th:data-iscompleted="${todo.isCompleted}" >
+                <div id="todos-container" class="w100 mt-5">
+                    <div th:each="todo: ${todoList}" th:id="${todo.id}" class="card mb-4 p-2 todo-card" th:data-iscompleted="${todo.isCompleted}" >
                         <div class="card-content is-flex is-justify-content-space-between is-align-items-center">
-                            <h1 th:text="${todo.name}" class="todo-name" th:classappend="${todo.isCompleted} ? 'todo-done' : ''">name</h1>
+                            <h1 th:text="${todo.name}" class="todo-name mr-4" th:classappend="${todo.isCompleted} ? 'todo-done' : ''">name</h1>
                             <button class="delete is-danger todo-delete"></button>
                         </div>
                     </div>

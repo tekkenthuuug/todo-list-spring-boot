@@ -1,3 +1,17 @@
 .todo-done {
     text-decoration: line-through;
 }
+
+.w100 {
+    width: 100%;
+    max-width: 800px;
+}
+
+.todo-name {
+    cursor: pointer;
+}
+
+#todos-container {
+    max-height: 40vh;
+    overflow-y: auto;
+}
