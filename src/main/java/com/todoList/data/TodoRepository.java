@@ -32,9 +32,10 @@ public class TodoRepository {
         for (int i = listSize; i >= 0; i--) {
             Todo currentTodo = todoList.get(i);
             if (taskId.equals(currentTodo.getId())) {
-                currentTodo.setIsCompleted(!currentTodo.getIsCompleted());
+                boolean newValue = !currentTodo.getIsCompleted();
+                currentTodo.setIsCompleted(newValue);
 
-                return true;
+                return newValue;
             }
         }
 

@@ -17,6 +17,10 @@ const deleteTodoItemRequest = async (todoId) => {
     return await fetchAndJson(`${API_BASE_URL}/task/${todoId}`, {method: 'DELETE'});
 }
 
+const completeTodoItemRequest = async (todoId) => {
+    return await fetchAndJson(`${API_BASE_URL}/task/complete/${todoId}`, {method: 'PUT'});
+}
+
 const createTodoItemRequest = async (name) => {
     return await fetchAndJson(`${API_BASE_URL}/task/create`,
         {
@@ -29,13 +33,24 @@ const createTodoItemRequest = async (name) => {
 }
 
 // send delete request to back-end and if success remove todoItem from DOM
-const deleteTodoItem = async (currentTodo) => {
-    const data = await deleteTodoItemRequest(currentTodo.id);
+const deleteTodoItem = async (todoElement) => {
+    const data = await deleteTodoItemRequest(todoElement.id);
 
     if (data === true) {
-        currentTodo.remove();
+        todoElement.remove();
     } else {
         // TODO: handle error
+    }
+}
+
+// send update isComplete request to back-end and update with received value
+const completeTodoItem = async (todoElement) => {
+    const data = await completeTodoItemRequest(todoElement.id);
+
+    if (data === true) {
+        todoElement.getElementsByClassName("todo-name")[0].classList.add("todo-done");
+    } else {
+        todoElement.getElementsByClassName("todo-name")[0].classList.remove("todo-done");
     }
 }
 
@@ -68,6 +83,7 @@ for (let i = 0; i < todos.length; i++) {
     const currentTodo = todos[i];
 
     currentTodo.getElementsByClassName("todo-delete")[0].addEventListener('click', () => deleteTodoItem(currentTodo));
+    currentTodo.getElementsByClassName("todo-name")[0].addEventListener('click', () => completeTodoItem(currentTodo));
 }
 
 addTodoForm.addEventListener('submit', async (e) => {
