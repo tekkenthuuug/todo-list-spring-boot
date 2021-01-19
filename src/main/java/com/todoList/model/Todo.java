@@ -7,7 +7,6 @@ public class Todo {
     private String name;
     private Boolean isCompleted = false;
     private Date createdDate = new Date();
-    private Date completedDate = null;
     private UUID id = UUID.randomUUID();
 
     public Todo(String name) {
@@ -36,14 +35,6 @@ public class Todo {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public Date getCompletedDate() {
-        return completedDate;
-    }
-
-    public void setCompletedDate(Date completedDate) {
-        this.completedDate = completedDate;
     }
 
     public UUID getId() {

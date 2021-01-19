@@ -17,6 +17,7 @@ public class TodoListController {
     @RequestMapping(value = "/")
     public String indexPage(ModelMap modelMap) {
         modelMap.put("todoList", todoRepository.getAll());
+        modelMap.put("progressPercentage", todoRepository.getProgressPercentage());
 
         return "index";
     }

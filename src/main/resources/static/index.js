@@ -2,6 +2,7 @@ const addTodoForm = document.getElementById("add-todo-form");
 const todosContainer = document.getElementById("todos-container");
 const todoNameInput = addTodoForm.getElementsByClassName("input")[0];
 const todos = todosContainer.getElementsByClassName("todo-card");
+const progressBar = document.getElementById('progress');
 
 const API_BASE_URL = "http://localhost:8000/api";
 
@@ -10,6 +11,20 @@ const fetchAndJson = async (input, init) => {
     const response = await fetch(input, init);
 
     return await response.json();
+}
+
+const updateCompletePercentage = () => {
+    const todos = todosContainer.children;
+    let completedCounter = 0;
+
+    for (let i = todos.length - 1; i >= 0; i--) {
+        console.log(todos.item(i).dataset.iscompleted)
+        if (todos.item(i).dataset.iscompleted === "true") {
+            completedCounter++;
+        }
+    }
+
+    progressBar.value = Math.round(completedCounter * 100 / todos.length);
 }
 
 // requests
@@ -38,6 +53,7 @@ const deleteTodoItem = async (todoElement) => {
 
     if (data === true) {
         todoElement.remove();
+        updateCompletePercentage();
     } else {
         // TODO: handle error
     }
@@ -47,11 +63,13 @@ const deleteTodoItem = async (todoElement) => {
 const completeTodoItem = async (todoElement) => {
     const data = await completeTodoItemRequest(todoElement.id);
 
+    todoElement.dataset.iscompleted = data;
     if (data === true) {
         todoElement.getElementsByClassName("todo-name")[0].classList.add("todo-done");
     } else {
         todoElement.getElementsByClassName("todo-name")[0].classList.remove("todo-done");
     }
+    updateCompletePercentage();
 }
 
 // add todoItem to DOM
@@ -66,16 +84,21 @@ const addTodoItemToDOM = (todo) => {
     container.className = "card my-4 p-2";
     content.className = "card-content is-flex is-justify-content-space-between is-align-items-center";
     button.className = "delete is-danger todo-delete";
+    h1.className = "todo-name";
 
     h1.innerText = todo.name;
+    container.dataset.iscompleted = todo.isCompleted;
 
-    button.addEventListener('click', () => deleteTodoItem(container))
+    button.addEventListener('click', () => deleteTodoItem(container));
+    h1.addEventListener('click', () => completeTodoItem(container));
 
     content.appendChild(h1);
     content.appendChild(button);
     container.appendChild(content);
 
     todosContainer.prepend(container);
+
+    updateCompletePercentage();
 }
 
 // add eventListeners to delete buttons of todoItems

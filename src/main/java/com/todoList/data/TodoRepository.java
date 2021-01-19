@@ -15,6 +15,22 @@ public class TodoRepository {
         return todoList;
     }
 
+    public static int getProgressPercentage() {
+        int completedCounter = 0;
+
+        int listSize = todoList.size();
+
+        for (int i = listSize - 1; i >= 0; i--) {
+            Todo currentTodo = todoList.get(i);
+
+            if (currentTodo.getIsCompleted()) {
+                completedCounter++;
+            }
+        }
+
+        return (int) ((double) completedCounter * 100 / listSize);
+    }
+
     public static Todo add(String name) {
         Todo todo = new Todo(name);
         todoList.add(0, todo);
@@ -27,9 +43,7 @@ public class TodoRepository {
     }
 
     public static boolean toggleIsCompletedById(UUID taskId) {
-        int listSize = todoList.size() - 1;
-
-        for (int i = listSize; i >= 0; i--) {
+        for (int i = todoList.size() - 1; i >= 0; i--) {
             Todo currentTodo = todoList.get(i);
             if (taskId.equals(currentTodo.getId())) {
                 boolean newValue = !currentTodo.getIsCompleted();
