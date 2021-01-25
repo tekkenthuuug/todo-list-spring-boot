@@ -15,6 +15,12 @@ const fetchAndJson = async (input, init) => {
 
 const updateCompletePercentage = () => {
     const todos = todosContainer.children;
+
+    if (todos.length === 0) {
+        progressBar.value = 0;
+        return;
+    }
+
     let completedCounter = 0;
 
     for (let i = todos.length - 1; i >= 0; i--) {
